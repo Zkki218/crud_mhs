@@ -1,6 +1,8 @@
 import { Component, OnInit } from '@angular/core';
 import { ApiService } from '../service/api.service';
 import { ModalController } from '@ionic/angular';
+import { AuthenticationService } from '../services/authentication.service';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-mahasiswa',
@@ -14,8 +16,9 @@ export class MahasiswaPage implements OnInit {
   id: any;
   nama: any;
   jurusan: any;
+  username: string;
 
-  constructor(private api: ApiService, private modal: ModalController) { }
+  constructor(private api: ApiService, private modal: ModalController, private authService: AuthenticationService, private router: Router) { this.username = this.authService.username }
 
   ngOnInit() {
     this.getMahasiswa();
@@ -136,6 +139,11 @@ export class MahasiswaPage implements OnInit {
           console.log('gagal edit Mahasiswa');
         }
       })
+  }
+
+  logout() {
+    this.authService.logout();
+    this.router.navigateByUrl('/login');
   }
 
 }

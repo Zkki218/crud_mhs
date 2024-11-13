@@ -3,6 +3,8 @@ import { ApiService } from '../service/api.service';
 import { ModalController } from '@ionic/angular';
 import { AuthenticationService } from '../services/authentication.service';
 import { Router } from '@angular/router';
+import { AlertController} from '@ionic/angular';
+import { ToastController } from '@ionic/angular';
 
 @Component({
   selector: 'app-mahasiswa',
@@ -18,7 +20,7 @@ export class MahasiswaPage implements OnInit {
   jurusan: any;
   username: string;
 
-  constructor(private api: ApiService, private modal: ModalController, private authService: AuthenticationService, private router: Router) { this.username = this.authService.username }
+  constructor(private api: ApiService, private modal: ModalController, private authService: AuthenticationService, private router: Router, private alertController: AlertController, private toastController: ToastController) { this.username = this.authService.username }
 
   ngOnInit() {
     this.getMahasiswa();
@@ -65,6 +67,14 @@ export class MahasiswaPage implements OnInit {
     this.resetModal();
   }
 
+  async presentToast(message: any) {
+    const toast = await this.toastController.create({
+      message: message,
+      duration: 2000
+    });
+    toast.present();
+  }
+
   tambahMahasiswa() {
     if (this.nama != '' && this.jurusan != '') {
       let data = {
@@ -76,12 +86,14 @@ export class MahasiswaPage implements OnInit {
           next: (hasil: any) => {
             this.resetModal();
             console.log('berhasil tambah mahasiswa');
+            this.presentToast('Berhasil tambah mahasiswa');
             this.getMahasiswa();
             this.modalTambah = false;
             this.modal.dismiss();
           },
           error: (err: any) => {
             console.log('gagal tambah mahasiswa');
+            this.presentToast('Gagal tambah mahasiswa');
           }
         })
     } else {
@@ -96,11 +108,38 @@ export class MahasiswaPage implements OnInit {
           console.log('sukses', res);
           this.getMahasiswa();
           console.log('berhasil hapus data');
+          this.presentToast('Berhasil hapus data');
         },
         error: (error: any) => {
           console.log('gagal');
+          this.presentToast('Gagal hapus data');
         }
       })
+  }
+
+  async konfirmasiHapus(id: any) {
+    const alert = await this.alertController.create({
+      header: 'Konfirmasi Hapus',
+      message: 'Apakah anda yakin ingin menghapus data ini?',
+      buttons: [
+        {
+          text: 'Batal',
+          role: 'cancel',
+          handler: () => {
+            console.log('Batal hapus');
+          }
+        },
+        {
+          text: 'Hapus',
+          role: 'confirm',
+          handler: () => {
+            this.hapusMahasiswa(id);
+          }
+        }
+      ]
+    });
+  
+    await alert.present();
   }
 
   ambilMahasiswa(id: any) {
@@ -132,11 +171,13 @@ export class MahasiswaPage implements OnInit {
           this.resetModal();
           this.getMahasiswa();
           console.log('berhasil edit Mahasiswa');
+          this.presentToast('Berhasil edit Mahasiswa');
           this.modalEdit = false;
           this.modal.dismiss();
         },
         error: (err: any) => {
           console.log('gagal edit Mahasiswa');
+          this.presentToast('Gagal edit Mahasiswa');
         }
       })
   }

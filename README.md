@@ -24,17 +24,14 @@ Dibuat oleh:
 
 ### 3. Tambah Data (Create)
 
-<img src="docs/create1.png" height="300">
-<img src="docs/create2.png" height="300">
+<img src="docs/create1.png" height="300"> <img src="docs/create2.png" height="300">
 
 - Modal untuk menambah data mahasiswa baru
 - Notifikasi toast setelah berhasil menambah data
 
 ### 4. Edit Data (Update)
 
-<img src="docs/edit1.png" height="300">
-<img src="docs/edit2.png" height="300">
-<img src="docs/edit3.png" height="300">
+<img src="docs/edit1.png" height="300"> <img src="docs/edit2.png" height="300"> <img src="docs/edit3.png" height="300">
 
 - Modal untuk mengubah data mahasiswa
 - Form auto fill dengan data yang ingin diedit
@@ -43,8 +40,7 @@ Dibuat oleh:
 
 ### 5. Hapus Data (Delete)
 
-<img src="docs/delete1.png" height="300">
-<img src="docs/delete2.png" height="300">
+<img src="docs/delete1.png" height="300"> <img src="docs/delete2.png" height="300">
 
 - Konfirmasi dialog sebelum hapus data
 - Opsi u/ batal atau lanjut hapus
